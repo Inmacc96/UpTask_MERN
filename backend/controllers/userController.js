@@ -22,4 +22,8 @@ const createUser = async (req, res) => {
   }
 };
 
-export { createUser };
+const authenticateUser = async (req, res) => {
+    
+};
+
+export { createUser, authenticateUser };
