@@ -1,4 +1,5 @@
-const express = require("express");
+import express from 'express';
+import prueba from './prueba.js';
 
 const app = express();
 
