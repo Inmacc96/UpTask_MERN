@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import generateId from "../helpers/generateId.js";
+import generateJWT from "../helpers/generateJWT.js";
 
 const createUser = async (req, res) => {
   // Evitar registros duplicados
@@ -24,7 +25,7 @@ const createUser = async (req, res) => {
 
 const authenticateUser = async (req, res) => {
   const { email, password } = req.body;
-  
+
   //Check if the user exists
   const user = await User.findOne({
     email,
@@ -40,8 +41,19 @@ const authenticateUser = async (req, res) => {
     const error = new Error("Tu Cuenta no ha sido confirmada");
     return res.status(404).json({ msg: error.message });
   }
-  
+
   //Check his password
+  if (await user.checkPassword(password)) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token: generateJWT(user._id),
+    });
+  } else {
+    const error = new Error("El Password es Incorrecto");
+    return res.status(404).json({ msg: error.message });
+  }
 };
 
 export { createUser, authenticateUser };
