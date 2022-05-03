@@ -98,4 +98,21 @@ const forgetPassword = async (req, res) => {
   }
 };
 
-export { createUser, authenticateUser, confirmUser, forgetPassword };
+const validateToken = async (req, res) => {
+  const { token } = req.params;
+  const user = await User.findOne({ token });
+  if (!user) {
+    const error = new Error("Token no válido");
+    return res.status(404).json({ msg: error.message });
+  } else {
+    res.json({ msg: "Token válido y el Usuario existe" });
+  }
+};
+
+export {
+  createUser,
+  authenticateUser,
+  confirmUser,
+  forgetPassword,
+  validateToken,
+};
