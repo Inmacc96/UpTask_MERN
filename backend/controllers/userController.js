@@ -56,4 +56,8 @@ const authenticateUser = async (req, res) => {
   }
 };
 
-export { createUser, authenticateUser };
+const confirmUser = async (req, res) => {
+console.log(req.params.token)
+}
+
+export { createUser, authenticateUser, confirmUser};
