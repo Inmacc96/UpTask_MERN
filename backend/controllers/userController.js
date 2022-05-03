@@ -57,7 +57,23 @@ const authenticateUser = async (req, res) => {
 };
 
 const confirmUser = async (req, res) => {
-console.log(req.params.token)
-}
+  const { token } = req.params;
+  const userConfirm = await User.findOne({ token }); //Check if there is a user with that token
+  if (!userConfirm) {
+    const error = new Error("Token no válido");
+    return res.status(404).json({ msg: error.message });
+  }
 
-export { createUser, authenticateUser, confirmUser};
+  try {
+    userConfirm.confirmed = true;
+    userConfirm.token = "";
+    console.log(userConfirm);
+    await userConfirm.save(); // Save changes bbdd.
+    res.json({msg: "Usuario Confirmado Correctamente"})
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(userConfirm);
+};
+
+export { createUser, authenticateUser, confirmUser };
