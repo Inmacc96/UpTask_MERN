@@ -109,10 +109,31 @@ const validateToken = async (req, res) => {
   }
 };
 
+const newPassword = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  const user = await User.findOne({ token });
+  if (!user) {
+    const error = new Error("Token no válido");
+    return res.status(404).json({ msg: error.message });
+  } else {
+    user.password = password;
+    user.token = "";
+    try {
+      await user.save();
+      res.json({ msg: "Password Modificado Correctamente" });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
 export {
   createUser,
   authenticateUser,
   confirmUser,
   forgetPassword,
   validateToken,
+  newPassword,
 };
