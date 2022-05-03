@@ -129,9 +129,11 @@ const newPassword = async (req, res) => {
   }
 };
 
-const profile = async(req, res) => {
-  console.log('desde perfil')
-}
+const profile = async (req, res) => {
+  const { user } = req;
+
+  res.json(user);
+};
 
 export {
   createUser,
@@ -140,5 +142,5 @@ export {
   forgetPassword,
   validateToken,
   newPassword,
-  profile
+  profile,
 };
