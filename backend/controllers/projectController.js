@@ -54,7 +54,7 @@ const editProject = async (req, res) => {
     }
 
     if (project.creator.toString() !== req.user._id.toString()) {
-      const error = new Error("No tienes permiso para acceder a este proyecto");
+      const error = new Error("No tienes permiso para editar este proyecto");
       return res.status(401).json({ msg: error.message });
     }
 
@@ -75,7 +75,34 @@ const editProject = async (req, res) => {
   }
 };
 
-const deleteProject = async (req, res) => {};
+const deleteProject = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Vemos si el proyecto existe en la bbdd
+    const project = await Project.findById(id);
+
+    if (!project) {
+      const error = new Error("El proyecto que estás buscando no existe");
+      return res.status(404).json({ msg: error.message });
+    }
+
+    if (project.creator.toString() !== req.user._id.toString()) {
+      const error = new Error("No tienes permiso para eliminar este proyecto");
+      return res.status(401).json({ msg: error.message });
+    }
+
+    // Eliminamos el proyecto
+    try {
+      await project.deleteOne();
+      res.json({msg: 'El proyecto ha sido eliminado correctamente'})
+    } catch (error) {
+      console.log(error);
+    }
+  } catch (error) {
+    res.status(404).json({ msg: "El id que ingresaste no es válido" });
+  }
+};
 
 const addPartner = async (req, res) => {};
 
