@@ -1,4 +1,5 @@
 import Project from "../models/Project.js";
+import Task from "../models/Task.js";
 
 const getProjects = async (req, res) => {
   const projects = await Project.find().where("creator").equals(req.user);
@@ -32,10 +33,14 @@ const getProject = async (req, res) => {
 
     if (project.creator.toString() !== req.user._id.toString()) {
       const error = new Error("No tienes permiso para acceder a este proyecto");
-      return res.status(401).json({ msg: error.message });
+      return res.status(403).json({ msg: error.message });
     }
 
-    res.json(project);
+    // Obtener las tareas del Proyecto (para no realizar dos llamados http
+    // nos traemos la tarea cuando el proyecto)
+    const tasks = await Task.find().where("proyect").equals(project._id);
+
+    res.json({project,tasks});
   } catch (error) {
     res.status(404).json({ msg: "El id que ingresaste no es válido" });
   }
@@ -55,7 +60,7 @@ const editProject = async (req, res) => {
 
     if (project.creator.toString() !== req.user._id.toString()) {
       const error = new Error("No tienes permiso para editar este proyecto");
-      return res.status(401).json({ msg: error.message });
+      return res.status(403).json({ msg: error.message });
     }
 
     // Actualizar el proyecto
@@ -89,13 +94,13 @@ const deleteProject = async (req, res) => {
 
     if (project.creator.toString() !== req.user._id.toString()) {
       const error = new Error("No tienes permiso para eliminar este proyecto");
-      return res.status(401).json({ msg: error.message });
+      return res.status(403).json({ msg: error.message });
     }
 
     // Eliminamos el proyecto
     try {
       await project.deleteOne();
-      res.json({msg: 'El proyecto ha sido eliminado correctamente'})
+      res.json({ msg: "El proyecto ha sido eliminado correctamente" });
     } catch (error) {
       console.log(error);
     }
@@ -108,8 +113,6 @@ const addPartner = async (req, res) => {};
 
 const deletePartner = async (req, res) => {};
 
-const getTasks = async (req, res) => {};
-
 export {
   getProjects,
   newProject,
@@ -118,5 +121,4 @@ export {
   deleteProject,
   addPartner,
   deletePartner,
-  getTasks,
 };
