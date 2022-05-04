@@ -1,12 +1,14 @@
 import Project from "../models/Project.js";
 
-const getProjects = async (req, res) => {};
+const getProjects = async (req, res) => {
+  const projects = await Project.find().where("creator").equals(req.user);
+
+  res.json(projects);
+};
 
 const newProject = async (req, res) => {
   const project = new Project(req.body);
   project.creator = req.user._id;
-
-  console.log(project)
 
   try {
     const projectStored = await project.save();
