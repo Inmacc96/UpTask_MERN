@@ -18,7 +18,28 @@ const newProject = async (req, res) => {
   }
 };
 
-const getProject = async (req, res) => {};
+const getProject = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Vemos si el proyecto existe en la bbdd
+    const project = await Project.findById(id);
+
+    if (!project) {
+      const error = new Error("El proyecto que estás buscando no existe");
+      return res.status(404).json({ msg: error.message });
+    }
+
+    if (project.creator.toString() !== req.user._id.toString()) {
+      const error = new Error("No tienes permiso para acceder a este proyecto");
+      return res.status(401).json({ msg: error.message });
+    }
+
+    res.json(project);
+  } catch (error) {
+    res.status(404).json({ msg: "El id que ingresaste no es válido" });
+  }
+};
 
 const editProject = async (req, res) => {};
 
