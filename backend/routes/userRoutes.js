@@ -21,6 +21,7 @@ router.get("/confirm/:token", confirmUser); // Con :, generamos routing dinámic
 router.post("/forget-password", forgetPassword);
 router.route("/forget-password/:token").get(validateToken).post(newPassword);
 
+//Obtener el perfil del usuario autenticado
 router.get("/profile", checkAuth, profile);
 
 export default router;

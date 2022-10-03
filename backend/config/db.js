@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const connectDB = async () => {
   try {
-    const connection = await mongoose.connect(
+    const connection = await mongoose.connect( //Permite conectarte a un servidor
       process.env.MONGO_URI,
       {
         useNewUrlParser: true,
@@ -14,7 +14,7 @@ const connectDB = async () => {
     console.log(`MongoDB Conectado en: ${url}`);
   } catch (error) {
     console.log(`error: ${error.message}`);
-    process.exit(1);
+    process.exit(1); //Para forzar que el proceso se termine de forma sincrona(no se espera a nada)
   }
 };
 

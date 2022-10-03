@@ -1,4 +1,4 @@
-import User from "../models/User.js";
+import User from "../models/User.js"; //Es el que interactua directamente con la BD
 import generateId from "../helpers/generateId.js";
 import generateJWT from "../helpers/generateJWT.js";
 
@@ -14,7 +14,7 @@ const createUser = async (req, res) => {
   }
 
   try {
-    const user = new User(req.body);
+    const user = new User(req.body); //Crea una nueva instancia con el modelo usuario y los datos dados
     user.token = generateId();
     const storedUsed = await user.save();
     res.json(storedUsed);
@@ -39,7 +39,7 @@ const authenticateUser = async (req, res) => {
   //Check if the user is confirmed
   if (!user.confirmed) {
     const error = new Error("Tu Cuenta no ha sido confirmada");
-    return res.status(404).json({ msg: error.message });
+    return res.status(403).json({ msg: error.message });
   }
 
   //Check his password
@@ -52,28 +52,26 @@ const authenticateUser = async (req, res) => {
     });
   } else {
     const error = new Error("El Password es Incorrecto");
-    return res.status(404).json({ msg: error.message });
+    return res.status(403).json({ msg: error.message });
   }
 };
 
 const confirmUser = async (req, res) => {
-  const { token } = req.params;
+  const { token } = req.params; //para obtener el token desde la ruta dinámica
   const userConfirm = await User.findOne({ token }); //Check if there is a user with that token
   if (!userConfirm) {
     const error = new Error("Token no válido");
-    return res.status(404).json({ msg: error.message });
+    return res.status(403).json({ msg: error.message });
   }
 
   try {
     userConfirm.confirmed = true;
-    userConfirm.token = "";
-    console.log(userConfirm);
+    userConfirm.token = ""; //Token de un sólo uso
     await userConfirm.save(); // Save changes bbdd.
     res.json({ msg: "Usuario Confirmado Correctamente" });
   } catch (error) {
     console.log(error);
   }
-  console.log(userConfirm);
 };
 
 const forgetPassword = async (req, res) => {
