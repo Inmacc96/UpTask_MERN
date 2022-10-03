@@ -1,8 +1,8 @@
 
-const confirmAccount = () => {
+const ConfirmAccount = () => {
   return (
-    <div>confirmAccount</div>
+    <div>ConfirmAccount</div>
   )
 }
 
-export default confirmAccount
+export default ConfirmAccount
