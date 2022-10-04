@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Alert from "../components/Alert";
+import axios from "axios";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -9,7 +10,7 @@ const SignUp = () => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [alert, setAlert] = useState({});
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     //Comprobar que todos los campos sean no vacíos, es decir, son obligatorios
@@ -43,7 +44,13 @@ const SignUp = () => {
     setAlert({})
 
     // Crear el usuario en la API
-    console.log("creando...");
+    try {
+      const response = await axios.post("http://localhost:4000/api/users", { name, email, password })
+      console.log(response);
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
