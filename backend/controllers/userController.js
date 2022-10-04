@@ -1,6 +1,7 @@
 import User from "../models/User.js"; //Es el que interactua directamente con la BD
 import generateId from "../helpers/generateId.js";
 import generateJWT from "../helpers/generateJWT.js";
+import { emailConfirmAccount } from "../helpers/email.js";
 
 const createUser = async (req, res) => {
   // Evitar registros duplicados
@@ -17,6 +18,14 @@ const createUser = async (req, res) => {
     const user = new User(req.body); //Crea una nueva instancia con el modelo usuario y los datos dados
     user.token = generateId();
     await user.save();
+
+    // Enviar el email de confirmación
+    emailConfirmAccount({
+      email: user.email,
+      name: user.name,
+      token: user.token,
+    });
+
     res.json({
       msg: "User successfully created, check your email to confirm your account",
     });
