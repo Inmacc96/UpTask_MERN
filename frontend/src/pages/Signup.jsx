@@ -1,11 +1,50 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Alert from "../components/Alert";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [alert, setAlert] = useState({});
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    //Comprobar que todos los campos sean no vacíos, es decir, son obligatorios
+    if ([name, email, password, repeatPassword].includes("")) {
+      setAlert({
+        msg: "All fields are required",
+        error: true
+      })
+      return
+    }
+
+    // Password y repeatPassowrd deben ser iguales
+    if (password !== repeatPassword) {
+      setAlert({
+        msg: "Passwords are not equal",
+        error: true
+      })
+      return
+    }
+
+    // La contraseña debe contener al menos 6 caracteres
+    if (password.length < 6) {
+      setAlert({
+        msg: "Password must contain at least 6 characters",
+        error: true
+      })
+      return
+    }
+
+    //Restablecemos la alerta
+    setAlert({})
+
+    // Crear el usuario en la API
+    console.log("creando...");
+  }
 
   return (
     <>
@@ -14,7 +53,10 @@ const SignUp = () => {
         <span className="text-slate-700">projects</span>
       </h1>
 
-      <form className="my-10 bg-white shadow rounded-lg p-10">
+      {alert.msg && <Alert alert={alert} />}
+
+      <form className="my-10 bg-white shadow rounded-lg p-10"
+        onSubmit={handleSubmit}>
         <div className="my-5">
           <label
             htmlFor="name"
