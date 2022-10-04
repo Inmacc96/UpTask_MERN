@@ -4,11 +4,11 @@ const Login = () => {
   return (
     <>
       <h1 className="text-sky-600 font-black text-6xl capitalize">
-        Inicia sesión y administra tus {""}{" "}
-        <span className="text-slate-700">proyectos</span>
+        Log in and manage your {""}{" "}
+        <span className="text-slate-700">projects</span>
       </h1>
 
-      <form className="my-10 bg-white shadow rounded-lg px-10 py-5">
+      <form className="my-10 bg-white shadow rounded-lg p-10">
         <div className="my-5">
           <label
             htmlFor="email"
@@ -19,7 +19,7 @@ const Login = () => {
           <input
             id="email"
             type="email"
-            placeholder="Email de Registro"
+            placeholder="Registration Email"
             className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
           />
         </div>
@@ -34,14 +34,14 @@ const Login = () => {
           <input
             id="password"
             type="password"
-            placeholder="Password de Registro"
+            placeholder="Registration Password"
             className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
           />
         </div>
 
         <input
           type="submit"
-          value="Iniciar Sesión"
+          value="Log in"
           className="bg-sky-700 mb-5 w-full py-3 text-white uppercase font-bold rounded
         hover:cursor-pointer hover:bg-sky-800 transition-colors"
         />
@@ -52,14 +52,14 @@ const Login = () => {
           className=" block text-center my-5 text-slate-500 uppercase text-sm"
           to="/signup"
         >
-          ¿No tienes una cuenta? Regístrate
+          Don't have an account? Sign up
         </Link>
 
         <Link
           className=" block text-center my-5 text-slate-500 uppercase text-sm"
           to="/forget-password"
         >
-          Olvidé mi password
+          Forget my password
         </Link>
       </nav>
     </>
