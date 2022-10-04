@@ -19,7 +19,6 @@ const whiteList = [process.env.FRONTEND_URL]; //Dominios que están permitidos
 
 const corsOptions = {
   origin: function (origin, callback) {
-    console.log(origin);
     if (whiteList.includes(origin)) {
       //Puede consultar la API
       callback(null, true);
