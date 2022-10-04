@@ -14,7 +14,7 @@ dotenv.config();
 connectDB();
 
 // Configurar CORS
-const whiteList = ["http://localhost:3000"]; //Dominios que están permitidos
+const whiteList = [process.env.FRONTEND_URL]; //Dominios que están permitidos
 //Le estamos diciendo que este localhost:4000 acepta peticiones del localhost:3000
 
 const corsOptions = {
