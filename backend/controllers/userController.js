@@ -9,15 +9,17 @@ const createUser = async (req, res) => {
     email,
   });
   if (userExists) {
-    const error = new Error("Usuario ya registrado");
+    const error = new Error("Already registered user");
     return res.status(400).json({ msg: error.message });
   }
 
   try {
     const user = new User(req.body); //Crea una nueva instancia con el modelo usuario y los datos dados
     user.token = generateId();
-    const storedUsed = await user.save();
-    res.json(storedUsed);
+    await user.save();
+    res.json({
+      msg: "User successfully created, check your email to confirm your account",
+    });
   } catch (error) {
     console.log(error);
   }
