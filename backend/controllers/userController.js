@@ -43,13 +43,13 @@ const authenticateUser = async (req, res) => {
   });
 
   if (!user) {
-    const error = new Error("El usuario no existe");
+    const error = new Error("The user doesn't exist");
     return res.status(404).json({ msg: error.message });
   }
 
   //Check if the user is confirmed
   if (!user.confirmed) {
-    const error = new Error("Tu Cuenta no ha sido confirmada");
+    const error = new Error("Your Account has not been confirmed");
     return res.status(403).json({ msg: error.message });
   }
 
@@ -62,7 +62,7 @@ const authenticateUser = async (req, res) => {
       token: generateJWT(user._id),
     });
   } else {
-    const error = new Error("El Password es Incorrecto");
+    const error = new Error("The password is incorrect");
     return res.status(403).json({ msg: error.message });
   }
 };
@@ -71,7 +71,7 @@ const confirmUser = async (req, res) => {
   const { token } = req.params; //para obtener el token desde la ruta dinámica
   const userConfirm = await User.findOne({ token }); //Check if there is a user with that token
   if (!userConfirm) {
-    const error = new Error("Token no válido");
+    const error = new Error("Invalid token");
     return res.status(403).json({ msg: error.message });
   }
 
@@ -79,7 +79,7 @@ const confirmUser = async (req, res) => {
     userConfirm.confirmed = true;
     userConfirm.token = ""; //Token de un sólo uso
     await userConfirm.save(); // Save changes bbdd.
-    res.json({ msg: "Usuario Confirmado Correctamente" });
+    res.json({ msg: "User successfully confirmed" });
   } catch (error) {
     console.log(error);
   }
@@ -94,14 +94,14 @@ const forgetPassword = async (req, res) => {
   });
 
   if (!user) {
-    const error = new Error("El usuario no existe");
+    const error = new Error("The user doesn't exist");
     return res.status(404).json({ msg: error.message });
   }
 
   try {
     user.token = generateId();
     await user.save();
-    res.json({ msg: "Hemos enviado un email con las instrucciones" });
+    res.json({ msg: "We have sent an email with instructions" });
   } catch (error) {
     console.log(error);
   }
@@ -111,10 +111,10 @@ const validateToken = async (req, res) => {
   const { token } = req.params;
   const user = await User.findOne({ token });
   if (!user) {
-    const error = new Error("Token no válido");
+    const error = new Error("Invalid token");
     return res.status(404).json({ msg: error.message });
   } else {
-    res.json({ msg: "Token válido y el Usuario existe" });
+    res.json({ msg: "Valid token and user exists" });
   }
 };
 
@@ -124,14 +124,14 @@ const newPassword = async (req, res) => {
 
   const user = await User.findOne({ token });
   if (!user) {
-    const error = new Error("Token no válido");
+    const error = new Error("Invalid token");
     return res.status(404).json({ msg: error.message });
   } else {
     user.password = password;
     user.token = "";
     try {
       await user.save();
-      res.json({ msg: "Password Modificado Correctamente" });
+      res.json({ msg: "Password correctly modified" });
     } catch (error) {
       console.log(error);
     }
