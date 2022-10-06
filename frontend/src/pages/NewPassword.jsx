@@ -10,6 +10,8 @@ const NewPassword = () => {
 
   const [isValidToken, setIsValidToken] = useState(false)
   const [alert, setAlert] = useState({});
+  const [password, setPassword] = useState("");
+  const [isModifiedPassword, setIsModifiedPassword] = useState(false)
 
   useEffect(() => {
     const validateToken = async () => {
@@ -29,6 +31,37 @@ const NewPassword = () => {
     validateToken();
   }, [])
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    //Validation
+    if (password.length < 6) {
+      setAlert({
+        msg: "Password must contain at least 6 characters",
+        error: true
+      })
+      return
+    }
+
+    try {
+      // TODO: Mover hacia un cliente axios
+      const url = `${import.meta.env.VITE_BACKEND_URL}/api/users/forget-password/${token}`
+      const { data } = await axios.post(url, { password });
+      setAlert({
+        msg: data.msg,
+        error: false
+      })
+      setIsModifiedPassword(true)
+    }
+    catch (err) {
+      setAlert({
+        msg: err.response.data.msg,
+        error: true
+      })
+    }
+
+  }
+
   return (
     <>
       <h1 className="text-sky-600 font-black text-6xl capitalize">
@@ -38,7 +71,7 @@ const NewPassword = () => {
 
       {alert.msg && <Alert alert={alert} />}
 
-      {isValidToken && (<form className="my-10 bg-white shadow rounded-lg p-10">
+      {isValidToken && (<form className="my-10 bg-white shadow rounded-lg p-10" onSubmit={handleSubmit}>
         <div className="my-5">
           <label
             htmlFor="password"
@@ -51,6 +84,8 @@ const NewPassword = () => {
             type="password"
             placeholder="Write your New Password"
             className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
         </div>
 
@@ -61,6 +96,15 @@ const NewPassword = () => {
       hover:cursor-pointer hover:bg-sky-800 transition-colors"
         />
       </form>)}
+
+      {isModifiedPassword && (
+        <Link
+          className=" block text-center my-5 text-slate-500 uppercase text-sm"
+          to="/"
+        >
+          Log in
+        </Link>
+      )}
     </>
   )
 }
