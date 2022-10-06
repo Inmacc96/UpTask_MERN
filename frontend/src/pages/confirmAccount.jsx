@@ -14,6 +14,7 @@ const ConfirmAccount = () => {
   useEffect(() => {
     const confirmAccount = async () => {
       try {
+        // TODO: Mover hacia un cliente axios
         const url = `${import.meta.env.VITE_BACKEND_URL}/api/users/confirm/${token}`
         const { data } = await axios(url);
 
