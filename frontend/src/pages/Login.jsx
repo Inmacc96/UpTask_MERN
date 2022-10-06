@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({})
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     // Validation
@@ -23,6 +23,18 @@ const Login = () => {
       return
     }
 
+    try {
+      const url = "/users/login";
+      const { data } = await clientAxios.post(url, { email, password })
+      setAlert({})
+      localStorage.setItem("token", data.token)
+
+    } catch (err) {
+      setAlert({
+        msg: err.response.data.msg,
+        error: true
+      })
+    }
   }
 
   return (
