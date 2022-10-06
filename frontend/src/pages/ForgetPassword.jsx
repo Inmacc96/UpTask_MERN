@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Alert from "../components/Alert";
 
 const ForgetPassword = () => {
@@ -7,7 +8,7 @@ const ForgetPassword = () => {
 
   const [alert, setAlert] = useState({})
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validation
@@ -17,6 +18,20 @@ const ForgetPassword = () => {
         error: true
       })
       return
+    }
+
+    try {
+      // TODO: Mover hacia un cliente axios
+      const url = `${import.meta.env.VITE_BACKEND_URL}/api/users/forget-password`;
+      const { data } = await axios.post(url, { email })
+
+      setAlert({ msg: data.msg, error: false })
+
+    } catch (err) {
+      setAlert({
+        msg: err.response.data.msg,
+        error: true
+      })
     }
 
   }

@@ -1,7 +1,7 @@
 import User from "../models/User.js"; //Es el que interactua directamente con la BD
 import generateId from "../helpers/generateId.js";
 import generateJWT from "../helpers/generateJWT.js";
-import { emailConfirmAccount } from "../helpers/email.js";
+import { emailConfirmAccount, emailResetPassword } from "../helpers/email.js";
 
 const createUser = async (req, res) => {
   // Evitar registros duplicados
@@ -101,6 +101,14 @@ const forgetPassword = async (req, res) => {
   try {
     user.token = generateId();
     await user.save();
+
+    //Enviar el email
+    emailResetPassword({
+      email: user.email,
+      name: user.name,
+      token: user.token,
+    });
+
     res.json({ msg: "We have sent an email with instructions" });
   } catch (error) {
     console.log(error);
