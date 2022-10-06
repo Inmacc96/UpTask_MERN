@@ -8,7 +8,7 @@ const ConfirmAccount = () => {
   const params = useParams();
   const { token } = params;
 
-  const [alert, setAlert] = useState({ msg: "", error: false })
+  const [alert, setAlert] = useState({})
   const [confirmedAccount, setConfirmedAccount] = useState(false)
 
   useEffect(() => {
