@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import clientAxios from "../config/clientAxios";
 import Alert from "../components/Alert";
 
 const ForgetPassword = () => {
@@ -21,9 +21,8 @@ const ForgetPassword = () => {
     }
 
     try {
-      // TODO: Mover hacia un cliente axios
-      const url = `${import.meta.env.VITE_BACKEND_URL}/api/users/forget-password`;
-      const { data } = await axios.post(url, { email })
+      const url = `/users/forget-password`;
+      const { data } = await clientAxios.post(url, { email })
 
       setAlert({ msg: data.msg, error: false })
 
