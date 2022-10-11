@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from "react";
+import { useNavigate } from "react-router-dom"
 import clientAxios from "../config/clientAxios";
 
 const AuthContext = createContext();
@@ -6,11 +7,15 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
 
     const [auth, setAuth] = useState({});
+    const [loading, setLoading] = useState(true)
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const authUser = async () => {
             const token = localStorage.getItem("token")
             if (!token) {
+                setLoading(false)
                 return
             }
             else {
@@ -24,9 +29,12 @@ const AuthProvider = ({ children }) => {
                 try {
                     const { data } = await clientAxios("/users/profile", config)
                     setAuth(data);
+                    navigate("/projects")
 
                 } catch (err) {
-
+                    setAuth({})
+                } finally {
+                    setLoading(false)
                 }
             }
         }
@@ -35,7 +43,7 @@ const AuthProvider = ({ children }) => {
 
 
     return (
-        <AuthContext.Provider value={{ setAuth }}>
+        <AuthContext.Provider value={{ auth, setAuth, loading }}>
             {children}
         </AuthContext.Provider>
     )
