@@ -10,6 +10,7 @@ import ForgetPassword from "./pages/ForgetPassword";
 import NewPassword from "./pages/NewPassword";
 import ConfirmAccount from "./pages/ConfirmAccount";
 import Projects from "./pages/Projects";
+import NewProject from "./pages/NewProject";
 
 import { AuthProvider } from "./context/AuthProvider"
 
@@ -29,6 +30,7 @@ function App() {
           {/* Área privada */}
           <Route path="/projects" element={<ProtectedRoute />}>
             <Route index element={<Projects />} />
+            <Route path="create-project" element={<NewProject />} />
           </Route>
         </Routes>
       </AuthProvider>
