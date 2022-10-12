@@ -28,7 +28,7 @@ const ModalFormTasks = () => {
             return
         }
 
-        submitTask({ name, description, priority, project: params.id })
+        submitTask({ name, description, deliveryDate, priority, project: params.id })
     }
 
     return (
