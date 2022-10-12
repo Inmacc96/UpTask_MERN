@@ -5,6 +5,8 @@ import clientAxios from "../config/clientAxios";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({})
@@ -32,7 +34,7 @@ const Login = () => {
       setAlert({})
       localStorage.setItem("token", data.token)
       setAuth(data)
-
+      navigate("/projects")
     } catch (err) {
       setAlert({
         msg: err.response.data.msg,
