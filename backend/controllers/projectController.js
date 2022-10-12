@@ -27,12 +27,12 @@ const getProject = async (req, res) => {
     const project = await Project.findById(id);
 
     if (!project) {
-      const error = new Error("El proyecto que estás buscando no existe");
+      const error = new Error("The project you are looking for does not exist");
       return res.status(404).json({ msg: error.message });
     }
 
     if (project.creator.toString() !== req.user._id.toString()) {
-      const error = new Error("No tienes permiso para acceder a este proyecto");
+      const error = new Error("You are not allowed to access this project");
       return res.status(403).json({ msg: error.message });
     }
 
@@ -42,7 +42,7 @@ const getProject = async (req, res) => {
      */
     res.json(project);
   } catch (error) {
-    res.status(404).json({ msg: "El id que ingresaste no es válido" });
+    res.status(404).json({ msg: "The id you entered is invalid" });
   }
 };
 
@@ -54,12 +54,12 @@ const editProject = async (req, res) => {
     const project = await Project.findById(id);
 
     if (!project) {
-      const error = new Error("El proyecto que estás buscando no existe");
+      const error = new Error("The project you are looking for does not exist");
       return res.status(404).json({ msg: error.message });
     }
 
     if (project.creator.toString() !== req.user._id.toString()) {
-      const error = new Error("No tienes permiso para editar este proyecto");
+      const error = new Error("You are not allowed to edit this project");
       return res.status(403).json({ msg: error.message });
     }
 
@@ -76,7 +76,7 @@ const editProject = async (req, res) => {
       console.log(error);
     }
   } catch (error) {
-    res.status(404).json({ msg: "El id que ingresaste no es válido" });
+    res.status(404).json({ msg: "The id you entered is invalid" });
   }
 };
 
@@ -88,24 +88,24 @@ const deleteProject = async (req, res) => {
     const project = await Project.findById(id);
 
     if (!project) {
-      const error = new Error("El proyecto que estás buscando no existe");
+      const error = new Error("The project you are looking for does not exist");
       return res.status(404).json({ msg: error.message });
     }
 
     if (project.creator.toString() !== req.user._id.toString()) {
-      const error = new Error("No tienes permiso para eliminar este proyecto");
+      const error = new Error("ou are not allowed to delete this project");
       return res.status(403).json({ msg: error.message });
     }
 
     // Eliminamos el proyecto
     try {
       await project.deleteOne();
-      res.json({ msg: "El proyecto ha sido eliminado correctamente" });
+      res.json({ msg: "The project has been successfully deleted" });
     } catch (error) {
       console.log(error);
     }
   } catch (error) {
-    res.status(404).json({ msg: "El id que ingresaste no es válido" });
+    res.status(404).json({ msg: "The id you entered is invalid" });
   }
 };
 
