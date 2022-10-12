@@ -1,14 +1,29 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useParams } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import Alert from "./Alert";
 
 const FormProject = () => {
+    const [id, setId] = useState(null);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [deliveryDate, setDeliveryDate] = useState("");
     const [customer, setCustomer] = useState("");
 
-    const { showAlert, alert, submitProject } = useProjects();
+    const params = useParams();
+
+    const { showAlert, alert, submitProject, project } = useProjects();
+
+    useEffect(() => {
+        if (params.id) {
+            // En este caso, estamos editando, entonces actualizamos los estados del formulario con los campos del proyecto
+            setId(project._id)
+            setName(project.name)
+            setDescription(project.description)
+            setDeliveryDate(project.deliveryDate?.split("T")[0])
+            setCustomer(project.customer)
+        }
+    }, [params])
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -104,7 +119,7 @@ const FormProject = () => {
 
             <input
                 type="submit"
-                value="Create proyect"
+                value={id ? "Update project" : "Create project"}
                 className="bg-sky-600 w-full p-3 uppercase font-bold text-white rounded cursor-pointer hover:bg-sky-700 transition-colors" />
 
         </form>
