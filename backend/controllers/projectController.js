@@ -38,9 +38,9 @@ const getProject = async (req, res) => {
 
     // Obtener las tareas del Proyecto (para no realizar dos llamados http
     // nos traemos la tarea cuando el proyecto)
-    const tasks = await Task.find().where("proyect").equals(project._id);
-
-    res.json({project,tasks});
+    /* const tasks = await Task.find().where("proyect").equals(project._id);
+     */
+    res.json(project);
   } catch (error) {
     res.status(404).json({ msg: "El id que ingresaste no es válido" });
   }
