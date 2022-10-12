@@ -38,9 +38,10 @@ const FormProject = () => {
         }
 
         // Send data to provider
-        await submitProject({ name, description, deliveryDate, customer })
+        await submitProject({ id, name, description, deliveryDate, customer })
 
         //Reset all states
+        setId(null)
         setName("")
         setDescription("")
         setDeliveryDate("")
