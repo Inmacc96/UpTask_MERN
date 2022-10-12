@@ -20,6 +20,9 @@ const addTask = async (req, res) => {
 
   try {
     const storedTask = await Task.create(req.body);
+    //Almacenar el ID en el proyecto
+    existingProject.tasks.push(storedTask._id);
+    await existingProject.save();
     res.json(storedTask);
   } catch (error) {
     console.log(error);
