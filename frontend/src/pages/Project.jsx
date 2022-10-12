@@ -1,13 +1,14 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
+import ModalFormTasks from "../components/ModalFormTasks";
 
 const Project = () => {
     const params = useParams();
 
     const { id } = params;
 
-    const { getProject, project, loading } = useProjects();
+    const { getProject, project, loading, handleModalTask } = useProjects();
 
     useEffect(() => {
         getProject(id)
@@ -32,6 +33,7 @@ const Project = () => {
 
 
             <button
+                onClick={handleModalTask}
                 type="button"
                 className="text-sm px-5 py-3 mt-5  w-full md:w-auto rounded-lg uppercase font-bold bg-sky-400 text-white text-center flex gap-2 items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -40,6 +42,8 @@ const Project = () => {
 
                 New Task
             </button>
+
+            <ModalFormTasks />
         </>
     )
 }
