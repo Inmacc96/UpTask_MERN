@@ -9,6 +9,7 @@ const ModalFormTasks = () => {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [deliveryDate, setDeliveryDate] = useState("")
     const [priority, setPriority] = useState("")
 
     const { modalFormTasks, handleModalTask, showAlert, alert, submitTask } = useProjects();
@@ -16,7 +17,7 @@ const ModalFormTasks = () => {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        if ([name, description, priority].includes("")) {
+        if ([name, description, deliveryDate, priority].includes("")) {
             showAlert({
                 msg: "All fields are required",
                 error: true
@@ -103,7 +104,7 @@ const ModalFormTasks = () => {
                                         <div className='mb-5'>
                                             <label
                                                 className='text-gray-700 uppercase font-bold text-sm'
-                                                htmlFor='desctiption'>
+                                                htmlFor='description'>
                                                 Task Description
                                             </label>
                                             <textarea
@@ -112,6 +113,20 @@ const ModalFormTasks = () => {
                                                 className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
                                                 value={description}
                                                 onChange={e => setDescription(e.target.value)} />
+                                        </div>
+
+                                        <div className='mb-5'>
+                                            <label
+                                                className='text-gray-700 uppercase font-bold text-sm'
+                                                htmlFor='delivery-date'>
+                                                Delivery Date
+                                            </label>
+                                            <input
+                                                id="delivery-date"
+                                                type="date"
+                                                className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                                                value={deliveryDate}
+                                                onChange={e => setDeliveryDate(e.target.value)} />
                                         </div>
 
                                         <div className='mb-5'>
