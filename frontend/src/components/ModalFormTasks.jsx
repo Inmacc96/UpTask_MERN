@@ -2,6 +2,7 @@ import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import useProjects from '../hooks/useProjects'
 import Alert from "../components/Alert"
+import { useParams } from 'react-router-dom'
 
 const PRIORITY = ["Low", "Medium", "High"]
 
@@ -14,6 +15,8 @@ const ModalFormTasks = () => {
 
     const { modalFormTasks, handleModalTask, showAlert, alert, submitTask } = useProjects();
 
+    const params = useParams();
+
     const handleSubmit = async e => {
         e.preventDefault();
 
@@ -25,7 +28,7 @@ const ModalFormTasks = () => {
             return
         }
 
-        submitTask({ name, description, priority })
+        submitTask({ name, description, priority, project: params.id })
     }
 
     return (
