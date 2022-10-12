@@ -2,7 +2,10 @@ import Project from "../models/Project.js";
 import Task from "../models/Task.js";
 
 const getProjects = async (req, res) => {
-  const projects = await Project.find().where("creator").equals(req.user);
+  const projects = await Project.find()
+    .where("creator")
+    .equals(req.user)
+    .select("-tasks");
 
   res.json(projects);
 };
@@ -24,7 +27,9 @@ const getProject = async (req, res) => {
 
   try {
     // Vemos si el proyecto existe en la bbdd
-    const project = await Project.findById(id);
+    //El populate es para cruzarlo con tareas y así me trae toda la informacion de sus tareas en vez
+    //de unicamente los IDs
+    const project = await Project.findById(id).populate("tasks");
 
     if (!project) {
       const error = new Error("The project you are looking for does not exist");
