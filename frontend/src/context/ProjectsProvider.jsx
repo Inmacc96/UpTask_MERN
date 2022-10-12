@@ -141,7 +141,37 @@ const ProjectsProvider = ({ children }) => {
     }
 
     const deleteProject = async (id) => {
-        console.log("delete", id)
+        try {
+            const token = localStorage.getItem("token")
+            if (!token) return
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const { data } = await clientAxios.delete(`/projects/${id}`, config)
+
+            // Sincronizar el state
+            const updatedProjects = projects.filter(project => (project._id !== id))
+            setProjects(updatedProjects)
+
+            setAlert({
+                msg: data.msg,
+                error: false
+            })
+
+            setTimeout(() => {
+                setAlert({})
+                navigate("/projects")
+            }, 3000)
+
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
