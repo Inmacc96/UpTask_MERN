@@ -46,9 +46,9 @@ const ProjectsProvider = ({ children }) => {
 
     const submitProject = async project => {
         if (project.id) {
-            editProject(project)
+            await editProject(project)
         } else {
-            newProject(project)
+            await newProject(project)
         }
     }
 
@@ -65,7 +65,21 @@ const ProjectsProvider = ({ children }) => {
             }
 
             const { data } = await clientAxios.put(`/projects/${project.id}`, project, config)
-            console.log(data)
+
+            // Sincronizar el state
+            const updatedProjects = projects.map(project => (project._id === data._id) ? data : project)
+            setProjects(updatedProjects)
+
+            // Mostrar la alerta
+            setAlert({
+                msg: "Project successfully updated",
+                error: false
+            })
+
+            setTimeout(() => {
+                setAlert({})
+                navigate("/projects")
+            }, 3000)
 
         } catch (err) {
             console.log(err)
