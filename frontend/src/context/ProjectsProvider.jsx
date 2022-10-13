@@ -207,7 +207,7 @@ const ProjectsProvider = ({ children }) => {
 
             //Actualizar el estado project
             const updatedProject = { ...project }
-            updatedProject.tasks.map(task => task._id === data._id ? data : task)
+            updatedProject.tasks = updatedProject.tasks.map(task => task._id === data._id ? data : task)
             setProject(updatedProject)
 
             setAlert({})
@@ -253,6 +253,40 @@ const ProjectsProvider = ({ children }) => {
         setModalDeleteTask(!modalDeleteTask)
     }
 
+    const deleteTask = async () => {
+        try {
+            const token = localStorage.getItem("token")
+            if (!token) return
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const { data } = await clientAxios.delete(`/tasks/${task._id}`, config)
+            setAlert({
+                msg: data.msg,
+                error: false
+            })
+
+            // Eliminar la tarea del state project
+            const updatedProject = { ...project }
+            updatedProject.tasks = updatedProject.tasks.filter(taskState => taskState._id !== task._id)
+            setProject(updatedProject)
+
+            setModalDeleteTask(false)
+            setTask({})
+
+            setTimeout(() => {
+                setAlert({})
+            }, 3000)
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <ProjectsContext.Provider
             value={{
@@ -270,7 +304,8 @@ const ProjectsProvider = ({ children }) => {
                 handleModalEditTask,
                 task,
                 modalDeleteTask,
-                handleModalDeleteTask
+                handleModalDeleteTask,
+                deleteTask
             }}>
             {children}
         </ProjectsContext.Provider>
