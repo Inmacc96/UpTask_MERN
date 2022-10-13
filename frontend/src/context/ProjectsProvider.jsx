@@ -287,6 +287,10 @@ const ProjectsProvider = ({ children }) => {
         }
     }
 
+    const submitPartner = async email => {
+        console.log(email);
+    }
+
     return (
         <ProjectsContext.Provider
             value={{
@@ -305,7 +309,8 @@ const ProjectsProvider = ({ children }) => {
                 task,
                 modalDeleteTask,
                 handleModalDeleteTask,
-                deleteTask
+                deleteTask,
+                submitPartner
             }}>
             {children}
         </ProjectsContext.Provider>
