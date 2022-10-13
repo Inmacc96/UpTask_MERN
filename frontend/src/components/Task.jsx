@@ -4,7 +4,7 @@ import useProjects from "../hooks/useProjects";
 const Task = ({ task }) => {
     const { name, description, priority, deliveryDate, _id, state } = task
 
-    const { handleModalEditTask } = useProjects();
+    const { handleModalEditTask, handleModalDeleteTask } = useProjects();
 
     return (
         <div className="border-b p-5 flex justify-between items-center">
@@ -16,7 +16,8 @@ const Task = ({ task }) => {
             </div>
 
             <div className="flex gap-2">
-                <button className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+                <button
+                    className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
                     onClick={() => handleModalEditTask(task)}>
                     Edit
                 </button>
@@ -27,7 +28,9 @@ const Task = ({ task }) => {
                     <button className="bg-gray-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg">
                         Incomplete
                     </button>}
-                <button className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg">
+                <button
+                    className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+                    onClick={() => handleModalDeleteTask(task)}>
                     Delete
                 </button>
             </div>
