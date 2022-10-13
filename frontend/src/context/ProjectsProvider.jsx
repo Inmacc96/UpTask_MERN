@@ -182,6 +182,41 @@ const ProjectsProvider = ({ children }) => {
     }
 
     const submitTask = async task => {
+
+        if (task?.id) {
+            await editTask(task)
+        } else {
+            await newTask(task)
+        }
+    }
+
+    const editTask = async (task) => {
+        try {
+            const token = localStorage.getItem("token")
+            if (!token) return
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const { data } = await clientAxios.put(`/tasks/${task.id}`, task, config)
+
+            //Actualizar el estado project
+            const updatedProject = { ...project }
+            updatedProject.tasks.map(task => task._id === data._id ? data : task)
+            setProject(updatedProject)
+
+            setAlert({})
+            setModalFormTasks(false)
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const newTask = async (task) => {
         try {
             const token = localStorage.getItem("token")
             if (!token) return
