@@ -8,13 +8,13 @@ const addTask = async (req, res) => {
 
   // Verificar que el proyecto existe
   if (!existingProject) {
-    const error = Error("El proyecto no existe");
+    const error = Error("The project does not exist");
     return res.status(404).json({ msg: error.message });
   }
 
   // Verificar que es el creador del proyecto
   if (existingProject.creator.toString() !== req.user._id.toString()) {
-    const error = Error("No tienes permiso para agregar una nueva tarea");
+    const error = Error("You are not allowed to add a new task");
     return res.status(403).json({ msg: error.message });
   }
 
@@ -39,19 +39,19 @@ const getTask = async (req, res) => {
 
     // Comprobar que la tarea existe
     if (!task) {
-      const error = Error("Tarea no encontrada");
+      const error = Error("Task not found");
       return res.status(404).json({ msg: error.message });
     }
 
     // Comprobar que la tarea la ha creado el usuario autenticado
     if (task.project.creator.toString() !== req.user._id.toString()) {
-      const error = Error("No tienes permiso para obtener esta tarea");
+      const error = Error("You are not allowed to get this task");
       return res.status(403).json({ msg: error.message });
     }
 
     res.json(task);
   } catch (error) {
-    res.status(404).json({ msg: "El id que ingresaste no es válido" });
+    res.status(404).json({ msg: "The id you entered is invalid" });
   }
 };
 
@@ -63,13 +63,13 @@ const updateTask = async (req, res) => {
 
     // Comprobar que la tarea existe
     if (!task) {
-      const error = Error("Tarea no encontrada");
+      const error = Error("Task not found");
       return res.status(404).json({ msg: error.message });
     }
 
     // Comprobar que la tarea la ha creado el usuario autenticado
     if (task.project.creator.toString() !== req.user._id.toString()) {
-      const error = Error("No tienes permiso para actualizar esta tarea");
+      const error = Error("You are not allowed to update this task");
       return res.status(403).json({ msg: error.message });
     }
     task.name = req.body.name || task.name;
@@ -84,7 +84,7 @@ const updateTask = async (req, res) => {
       console.log(error);
     }
   } catch (error) {
-    res.status(404).json({ msg: "El id que ingresaste no es válido" });
+    res.status(404).json({ msg: "The id you entered is invalid" });
   }
 };
 
@@ -96,25 +96,25 @@ const deleteTask = async (req, res) => {
 
     // Comprobar que la tarea existe
     if (!task) {
-      const error = Error("Tarea no encontrada");
+      const error = Error("Task not found");
       return res.status(404).json({ msg: error.message });
     }
 
     // Comprobar que la tarea la ha creado el usuario autenticado
     if (task.project.creator.toString() !== req.user._id.toString()) {
-      const error = Error("No tienes permiso para eliminar esta tarea");
+      const error = Error("You are not allowed to delete this task");
       return res.status(403).json({ msg: error.message });
     }
 
     // Eliminamos la tarea
     try {
       await task.deleteOne();
-      res.json({ msg: "La tarea ha sido eliminado correctamente" });
+      res.json({ msg: "The task has been successfully deleted" });
     } catch (error) {
       console.log(error);
     }
   } catch (error) {
-    res.status(404).json({ msg: "El id que ingresaste no es válido" });
+    res.status(404).json({ msg: "The id you entered is invalid" });
   }
 };
 
