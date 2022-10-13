@@ -11,7 +11,7 @@ const Task = ({ task }) => {
             <div>
                 <p className="mb-1 text-xl">{name}</p>
                 <p className="mb-1 text-sm text-gray-500 uppercase">{description}</p>
-                <p className="mb-1 text-md">{formatDate(deliveryDate)}</p>
+                <p className="mb-1 text-sm">{formatDate(deliveryDate)}</p>
                 <p className="mb-1 text-gray-600">Priority: {priority}</p>
             </div>
 
