@@ -179,7 +179,27 @@ const addPartner = async (req, res) => {
   res.json({ msg: "Partner successfully added" });
 };
 
-const deletePartner = async (req, res) => {};
+const deletePartner = async (req, res) => {
+  //Comprobar que el proyecto existe
+  const project = await Project.findById(req.params.id);
+
+  if (!project) {
+    const error = new Error("The project doesn't exist");
+    return res.status(404).json({ msg: error.message });
+  }
+
+  // Comprobar que el usuario logeado que intenta eliminar a un colaborador es el creador del proyecto
+  if (project.creator.toString() !== req.user._id.toString()) {
+    const error = new Error("Invalid action");
+    return res.status(403).json({ msg: error.message });
+  }
+
+  // Eliminar colabolador
+  project.partners.pull(req.body.id);
+  await project.save();
+
+  res.json({ msg: "Partner successfully deleted" });
+};
 
 export {
   getProjects,
