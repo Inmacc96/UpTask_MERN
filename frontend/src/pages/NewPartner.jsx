@@ -2,12 +2,13 @@ import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import useProjects from "../hooks/useProjects"
 import FormPartner from "../components/FormPartner"
+import Alert from "../components/Alert"
 
 const NewPartner = () => {
     const params = useParams();
     const { id } = params
 
-    const { getProject, project, loading, partner, addPartner } = useProjects();
+    const { getProject, project, loading, partner, addPartner, alert } = useProjects();
 
     useEffect(() => {
         getProject(id)
@@ -16,6 +17,8 @@ const NewPartner = () => {
     const { name } = project;
 
     /* if (loading) return "Loading..." */
+
+    if (!project?._id) return <Alert alert={alert} />
 
     return (
         <>
