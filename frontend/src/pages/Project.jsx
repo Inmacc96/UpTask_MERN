@@ -4,6 +4,7 @@ import useProjects from "../hooks/useProjects";
 import ModalFormTasks from "../components/ModalFormTasks";
 import ModalDeleteTask from "../components/ModalDeleteTask";
 import Task from "../components/Task";
+import Partner from "../components/Partner";
 import Alert from "../components/Alert";
 
 const Project = () => {
@@ -75,6 +76,17 @@ const Project = () => {
                     Add
                 </Link>
 
+            </div>
+
+            <div className="bg-white shadow mt-10 rounded-lg">
+                {project.partners?.length
+                    ?
+                    project.partners?.map(partner => (
+                        <Partner key={partner._id} partner={partner} />
+                    ))
+                    :
+                    <p className="text-center my-5 p-10">There are no partners in this project</p>
+                }
             </div>
 
 
