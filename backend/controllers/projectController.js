@@ -32,7 +32,7 @@ const getProject = async (req, res) => {
     // Lo cruzamos tambien con los colaboradores
     const project = await Project.findById(id)
       .populate("tasks")
-      .populate("partners");
+      .populate("partners", "name email"); // El id lo trae implicito
 
     if (!project) {
       const error = new Error("The project you are looking for does not exist");
