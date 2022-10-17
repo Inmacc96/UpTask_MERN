@@ -23,6 +23,6 @@ router
 
 router.post("/partners", checkAuth, searchPartner);
 router.post("/partners/:id", checkAuth, addPartner);
-router.delete("/partners/:id", checkAuth, deletePartner);
+router.post("/delete-partner/:id", checkAuth, deletePartner);
 
 export default router;
