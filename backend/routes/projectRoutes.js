@@ -5,6 +5,7 @@ import {
   getProject,
   editProject,
   deleteProject,
+  searchPartner,
   addPartner,
   deletePartner,
 } from "../controllers/projectController.js";
@@ -20,7 +21,8 @@ router
   .put(checkAuth, editProject)
   .delete(checkAuth, deleteProject);
 
-router.post("/add-partner/:id", checkAuth, addPartner);
-router.post("/delete-partner/:id", checkAuth, deletePartner);
+router.post("/partners", checkAuth, searchPartner);
+router.post("/partners/:id", checkAuth, addPartner);
+router.delete("/partners/:id", checkAuth, deletePartner);
 
 export default router;
