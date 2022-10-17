@@ -358,7 +358,37 @@ const ProjectsProvider = ({ children }) => {
     }
 
     const deletePartner = async () => {
-        console.log(partner)
+        try {
+            const token = localStorage.getItem("token")
+            if (!token) return
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const { data } = await clientAxios.post(`/projects/delete-partner/${project._id}`, { id: partner._id }, config)
+
+            const updatedProject = { ...project }
+            updatedProject.partners = updatedProject.partners.filter(partnerState => partnerState._id !== partner._id)
+            setProject(updatedProject)
+
+            setAlert({
+                msg: data.msg,
+                error: false
+            })
+            setPartner({})
+            setModalDeletePartner(false)
+
+            setTimeout(() => {
+                setAlert({})
+            }, 3000)
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
