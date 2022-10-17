@@ -13,6 +13,8 @@ const ProjectsProvider = ({ children }) => {
     const [modalFormTasks, setModalFormTasks] = useState(false)
     const [task, setTask] = useState({})
     const [modalDeleteTask, setModalDeleteTask] = useState(false)
+    const [partner, setPartner] = useState({})
+
 
     const navigate = useNavigate();
 
@@ -288,7 +290,31 @@ const ProjectsProvider = ({ children }) => {
     }
 
     const submitPartner = async email => {
-        console.log(email);
+        setLoading(true)
+        try {
+            const token = localStorage.getItem("token")
+            if (!token) return
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const { data } = await clientAxios.post("/projects/partners", { email }, config)
+
+            setPartner(data)
+            setAlert({})
+
+        } catch (err) {
+            setAlert({
+                msg: err.response.data.msg,
+                error: true
+            });
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -310,7 +336,8 @@ const ProjectsProvider = ({ children }) => {
                 modalDeleteTask,
                 handleModalDeleteTask,
                 deleteTask,
-                submitPartner
+                submitPartner,
+                partner
             }}>
             {children}
         </ProjectsContext.Provider>
