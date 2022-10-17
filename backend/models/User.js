@@ -29,7 +29,7 @@ const userSchema = mongoose.Schema(
     },
   },
   {
-    timestamp: true, //Crea dos columnas más, una de creado y otra de actualizado
+    timestamps: true, //Crea dos columnas más, una de creado y otra de actualizado
   }
 );
 
