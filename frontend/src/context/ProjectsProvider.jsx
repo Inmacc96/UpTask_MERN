@@ -14,6 +14,7 @@ const ProjectsProvider = ({ children }) => {
     const [task, setTask] = useState({})
     const [modalDeleteTask, setModalDeleteTask] = useState(false)
     const [partner, setPartner] = useState({})
+    const [modalDeletePartner, setModalDeletePartner] = useState(false)
 
 
     const navigate = useNavigate();
@@ -351,6 +352,15 @@ const ProjectsProvider = ({ children }) => {
         }
     }
 
+    const handleModalDeletePartner = (partner) => {
+        setModalDeletePartner(!modalDeletePartner)
+        setPartner(partner);
+    }
+
+    const deletePartner = async () => {
+        console.log(partner)
+    }
+
     return (
         <ProjectsContext.Provider
             value={{
@@ -372,7 +382,10 @@ const ProjectsProvider = ({ children }) => {
                 deleteTask,
                 submitPartner,
                 partner,
-                addPartner
+                addPartner,
+                modalDeletePartner,
+                handleModalDeletePartner,
+                deletePartner
             }}>
             {children}
         </ProjectsContext.Provider>

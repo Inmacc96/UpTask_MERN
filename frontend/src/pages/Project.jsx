@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import useProjects from "../hooks/useProjects";
 import ModalFormTasks from "../components/ModalFormTasks";
 import ModalDeleteTask from "../components/ModalDeleteTask";
+import ModalDeletePartner from "../components/ModalDeletePartner";
 import Task from "../components/Task";
 import Partner from "../components/Partner";
 import Alert from "../components/Alert";
@@ -92,6 +93,7 @@ const Project = () => {
 
             <ModalFormTasks />
             <ModalDeleteTask />
+            <ModalDeletePartner />
         </>
     )
 }
