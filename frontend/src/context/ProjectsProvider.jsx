@@ -139,7 +139,11 @@ const ProjectsProvider = ({ children }) => {
 
 
         } catch (err) {
-            console.log(err)
+            console.log(err.response.data)
+            setAlert({
+                msg: err.response.data.msg,
+                error: true
+            })
         } finally {
             setLoading(false)
         }
@@ -318,7 +322,33 @@ const ProjectsProvider = ({ children }) => {
     }
 
     const addPartner = async (email) => {
-        console.log(email);
+        try {
+            const token = localStorage.getItem("token")
+            if (!token) return
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const { data } = await clientAxios.post(`/projects/partners/${project._id}`, email, config)
+
+            setAlert({
+                msg: data.msg,
+                error: false
+            })
+            setPartner({})
+            setTimeout(() => {
+                setAlert({})
+            }, 3000)
+        } catch (err) {
+            setAlert({
+                msg: err.response.data.msg,
+                error: true
+            })
+        }
     }
 
     return (
