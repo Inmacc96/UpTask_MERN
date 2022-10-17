@@ -29,7 +29,10 @@ const getProject = async (req, res) => {
     // Vemos si el proyecto existe en la bbdd
     //El populate es para cruzarlo con tareas y así me trae toda la informacion de sus tareas en vez
     //de unicamente los IDs
-    const project = await Project.findById(id).populate("tasks");
+    // Lo cruzamos tambien con los colaboradores
+    const project = await Project.findById(id)
+      .populate("tasks")
+      .populate("partners");
 
     if (!project) {
       const error = new Error("The project you are looking for does not exist");
