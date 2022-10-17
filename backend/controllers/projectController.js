@@ -130,7 +130,51 @@ const searchPartner = async (req, res) => {
   res.json(user);
 };
 
-const addPartner = async (req, res) => {};
+const addPartner = async (req, res) => {
+  //Comprobar que el proyecto existe
+  const project = await Project.findById(req.params.id);
+
+  if (!project) {
+    const error = new Error("The project doesn't exist");
+    return res.status(404).json({ msg: error.message });
+  }
+
+  // Comprobar que el usuario logeado que intenta agregar es el creador del proyecto
+  if (project.creator.toString() !== req.user._id.toString()) {
+    const error = new Error("Invalid action");
+    return res.status(403).json({ msg: error.message });
+  }
+
+  // Comprobar que el colaborador existe
+  const { email } = req.body;
+
+  const user = await User.findOne({ email }).select(
+    "-confirmed -createdAt -password -token -updatedAt -__v"
+  );
+
+  if (!user) {
+    const error = new Error("User not found");
+    return res.status(404).json({ msg: error.message });
+  }
+
+  // Comprobar que el colaborador a añadir NO es el administrador(Creador) del proyectp
+  if (project.creator.toString() === user._id.toString()) {
+    const error = new Error("The creator of the project cannot be a partner");
+    return res.status(403).json({ msg: error.message });
+  }
+
+  // Comprobar que el colaborador no esté ya agregado al proyecto
+  if (project.partners.includes(user._id)) {
+    const error = new Error("User already belongs to the project");
+    return res.status(403).json({ msg: error.message });
+  }
+
+  // Agregar
+  project.partners.push(user._id);
+  await project.save();
+
+  res.json({ msg: "Partner successfully added" });
+};
 
 const deletePartner = async (req, res) => {};
 
