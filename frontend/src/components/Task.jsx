@@ -1,10 +1,12 @@
 import { formatDate } from "../helpers/formatDate"
 import useProjects from "../hooks/useProjects";
+import useAdmin from "../hooks/useAdmin";
 
 const Task = ({ task }) => {
     const { name, description, priority, deliveryDate, _id, state } = task
 
     const { handleModalEditTask, handleModalDeleteTask } = useProjects();
+    const admin = useAdmin();
 
     return (
         <div className="border-b p-5 flex justify-between items-center">
@@ -16,11 +18,11 @@ const Task = ({ task }) => {
             </div>
 
             <div className="flex gap-2">
-                <button
+                {admin && <button
                     className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
                     onClick={() => handleModalEditTask(task)}>
                     Edit
-                </button>
+                </button>}
                 {state ?
                     <button className="bg-sky-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg">
                         Complete
@@ -28,11 +30,11 @@ const Task = ({ task }) => {
                     <button className="bg-gray-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg">
                         Incomplete
                     </button>}
-                <button
+                {admin && <button
                     className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
                     onClick={() => handleModalDeleteTask(task)}>
                     Delete
-                </button>
+                </button>}
             </div>
         </div>
     )
