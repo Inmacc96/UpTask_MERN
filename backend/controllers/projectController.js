@@ -3,12 +3,8 @@ import User from "../models/User.js";
 
 const getProjects = async (req, res) => {
   const projects = await Project.find({
-    $or: [
-      {partners: {$in: req.user}},
-      {creator: {$in: req.user}}
-    ]
-  })
-    .select("-tasks");
+    $or: [{ partners: { $in: req.user } }, { creator: { $in: req.user } }],
+  }).select("-tasks");
 
   res.json(projects);
 };
@@ -42,7 +38,12 @@ const getProject = async (req, res) => {
       return res.status(404).json({ msg: error.message });
     }
 
-    if (project.creator.toString() !== req.user._id.toString()) {
+    if (
+      project.creator.toString() !== req.user._id.toString() &&
+      !project.partners.some(
+        (partner) => partner._id.toString() === req.user._id.toString()
+      )
+    ) {
       const error = new Error("You are not allowed to access this project");
       return res.status(403).json({ msg: error.message });
     }
