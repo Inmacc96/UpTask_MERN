@@ -139,7 +139,6 @@ const ProjectsProvider = ({ children }) => {
             setProject(data);
             setAlert({})
         } catch (err) {
-            console.log(err.response.data)
             setAlert({
                 msg: err.response.data.msg,
                 error: true
