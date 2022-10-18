@@ -1,13 +1,15 @@
-import { Children } from "react";
 import useProjects from "../hooks/useProjects"
 import PreviewProject from "../components/PreviewProject";
+import Alert from "../components/Alert";
 
 const Projects = () => {
-    const { projects } = useProjects();
+    const { projects, alert } = useProjects();
 
     return (
         <>
             <h1 className="text-4xl font-black">Projects</h1>
+
+            {alert.msg && <Alert alert={alert} />}
 
             <div className="bg-white shadow mt-10 rounded-lg">
                 {projects.length ?
