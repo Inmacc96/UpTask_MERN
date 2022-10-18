@@ -118,6 +118,31 @@ const deleteTask = async (req, res) => {
   }
 };
 
-const changeStateTask = async (req, res) => {};
+const changeStateTask = async (req, res) => {
+  const { id } = req.params;
+
+  const task = await Task.findById(id).populate("project");
+
+  // Comprobar que la tarea existe
+  if (!task) {
+    const error = Error("Task not found");
+    return res.status(404).json({ msg: error.message });
+  }
+
+  // El usuario debe ser el creador del proyecto o colabolador
+  if (
+    task.project.creator.toString() !== req.user._id.toString() &&
+    !task.project.partners.some(
+      (partner) => partner._id.toString() === req.user._id.toString()
+    )
+  ) {
+    const error = Error("You are not allowed to delete this task");
+    return res.status(403).json({ msg: error.message });
+  }
+
+  task.state = !task.state;
+  await task.save();
+  res.json(task);
+};
 
 export { addTask, getTask, updateTask, deleteTask, changeStateTask };
