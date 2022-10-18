@@ -30,7 +30,7 @@ const getProject = async (req, res) => {
     //de unicamente los IDs
     // Lo cruzamos tambien con los colaboradores
     const project = await Project.findById(id)
-      .populate("tasks")
+      .populate({path: "tasks", populate: {path: "completed", select: "name" }})
       .populate("partners", "name email"); // El id lo trae implicito
 
     if (!project) {

@@ -110,7 +110,7 @@ const deleteTask = async (req, res) => {
     try {
       const project = await Project.findById(task.project._id);
       project.tasks.pull(task._id);
-/*       await project.save();
+      /*       await project.save();
       await task.deleteOne(); */
 
       // De esta forma inician en paralelo, no van a bloquear una a otro:
@@ -128,7 +128,8 @@ const deleteTask = async (req, res) => {
 const changeStateTask = async (req, res) => {
   const { id } = req.params;
 
-  const task = await Task.findById(id).populate("project");
+  const task = await Task.findById(id)
+    .populate("project")
 
   // Comprobar que la tarea existe
   if (!task) {
@@ -148,8 +149,15 @@ const changeStateTask = async (req, res) => {
   }
 
   task.state = !task.state;
+  // Añadir quien ha completado la tarea
+  task.completed = req.user._id;
   await task.save();
-  res.json(task);
+
+  const storedTask = await Task.findById(id)
+    .populate("project")
+    .populate("completed");
+
+  res.json(storedTask);
 };
 
 export { addTask, getTask, updateTask, deleteTask, changeStateTask };
