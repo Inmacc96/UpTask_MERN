@@ -108,7 +108,14 @@ const deleteTask = async (req, res) => {
 
     // Eliminamos la tarea
     try {
-      await task.deleteOne();
+      const project = await Project.findById(task.project._id);
+      project.tasks.pull(task._id);
+/*       await project.save();
+      await task.deleteOne(); */
+
+      // De esta forma inician en paralelo, no van a bloquear una a otro:
+      await Promise.allSettled([await project.save(), await task.deleteOne()]);
+
       res.json({ msg: "The task has been successfully deleted" });
     } catch (error) {
       console.log(error);
