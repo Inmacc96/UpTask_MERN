@@ -113,7 +113,7 @@ const FormProject = () => {
                     id="customer-name"
                     type="text"
                     className="border w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                    placeholder="Project Name"
+                    placeholder="Customer Name"
                     value={customer}
                     onChange={e => setCustomer(e.target.value)} />
             </div>
