@@ -10,8 +10,15 @@ const Projects = () => {
     const { projects, alert } = useProjects();
 
     useEffect(() => {
+        // Conectar hacia socket.io
         socket = io(import.meta.env.VITE_BACKEND_URL)
         //Esto lo que va hacer es abrir una conexion hacia socket io
+
+        // Enviar datos desde el front hacia el back
+        socket.emit("test", projects)
+        // Emite un evento hacia el socket identificado por un string
+        // En este caso: Envia el evento test hacia el socket.
+        // Como segundo argumento le pasamos los datos
     }, [])
 
     return (
