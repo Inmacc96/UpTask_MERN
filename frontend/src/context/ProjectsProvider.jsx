@@ -458,6 +458,14 @@ const ProjectsProvider = ({ children }) => {
         setProject(updatedProject)
     }
 
+    const logOutProjects = () => {
+        setProjects([])
+        setProject({})
+        setAlert({})
+        setTask({})
+        setPartner({})
+    }
+
     return (
         <ProjectsContext.Provider
             value={{
@@ -489,7 +497,8 @@ const ProjectsProvider = ({ children }) => {
                 submitTaskProject,
                 deleteTaskProject,
                 editTaskProject,
-                updateStateTaskProject
+                updateStateTaskProject,
+                logOutProjects
             }}>
             {children}
         </ProjectsContext.Provider>

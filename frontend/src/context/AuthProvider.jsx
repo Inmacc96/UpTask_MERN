@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
                 try {
                     const { data } = await clientAxios("/users/profile", config)
                     setAuth(data);
-                   /*  navigate("/projects") */
+                    /*  navigate("/projects") */
 
                 } catch (err) {
                     setAuth({})
@@ -41,9 +41,13 @@ const AuthProvider = ({ children }) => {
         authUser()
     }, [])
 
+    const logOutAuth = () => {
+        setAuth({})
+    }
+
 
     return (
-        <AuthContext.Provider value={{ auth, setAuth, loading }}>
+        <AuthContext.Provider value={{ auth, setAuth, loading, logOutAuth }}>
             {children}
         </AuthContext.Provider>
     )

@@ -1,10 +1,19 @@
 import { Link } from "react-router-dom"
 import useProjects from "../hooks/useProjects"
+import useAuth from "../hooks/useAuth";
 import ProjectsSearch from "./ProjectsSearch";
 
 const Header = () => {
 
-    const { handleSearcher } = useProjects();
+    const { handleSearcher, logOutProjects } = useProjects();
+
+    const { logOutAuth } = useAuth();
+
+    const handleLogOut = () => {
+        logOutAuth();
+        logOutProjects();
+        localStorage.removeItem("token")
+    }
 
     return (
         <header className="px-4 py-5 bg-white border-b">
@@ -19,7 +28,13 @@ const Header = () => {
                         Search Projects
                     </button>
                     <Link to="/projects" className="font-bold uppercase">Projects</Link>
-                    <button type="button" className="text-white text-sm bg-sky-600 p-3 rounded-md uppercase font-bold">Log Out</button>
+                    <button
+                        type="button"
+                        className="text-white text-sm bg-sky-600 p-3 rounded-md uppercase font-bold"
+                        onClick={handleLogOut}
+                    >
+                        Log Out
+                    </button>
                 </div>
 
                 <ProjectsSearch />
