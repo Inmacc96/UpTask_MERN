@@ -61,4 +61,11 @@ io.on("connection", (socket) => {
     socket.join(project);
     // A los usuarios que estén dentro de este proyecto, se les va a resfrecar la pantalla automaticamente
   });
+
+  socket.on("new task", (task) => {
+    const project = task.project;
+    console.log(project);
+    // Solo a los usuarios que estén en project se les va a emitir el evento added task
+    socket.to(project).emit("added task", task);
+  });
 });

@@ -16,7 +16,7 @@ const Project = () => {
 
     const { id } = params;
 
-    const { getProject, project, loading, handleModalTask, alert } = useProjects();
+    const { getProject, project, loading, handleModalTask, submitTaskProject } = useProjects();
     const admin = useAdmin();
 
     useEffect(() => {
@@ -32,8 +32,10 @@ const Project = () => {
     //Este useEffect se va a estar ejecutando todo el tiempo, es decir,
     //cada vez que se renderice el componente
     useEffect(() => {
-        socket.on("response", (person) => {
-            console.log(person)
+        socket.on("added task", (newTask) => {
+            if (newTask.project === project._id) {
+                submitTaskProject(newTask)
+            }
         })
     })
     // La diferencia de usar useEffect a no usarlo en este caso que no tiene array de dependencias

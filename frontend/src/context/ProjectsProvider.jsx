@@ -1,6 +1,9 @@
 import { useState, useEffect, createContext } from "react";
 import clientAxios from "../config/clientAxios";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import io from "socket.io-client";
+
+let socket;
 
 const ProjectsContext = createContext();
 
@@ -41,6 +44,12 @@ const ProjectsProvider = ({ children }) => {
             }
         }
         getProjects();
+    }, [])
+
+    // Se va a encargar de abrir la conexion hacia socket io.
+    // Se ejecuta UNA SOLA VEZ
+    useEffect(() => {
+        socket = io(import.meta.env.VITE_BACKEND_URL)
     }, [])
 
     const showAlert = alert => {
@@ -241,13 +250,11 @@ const ProjectsProvider = ({ children }) => {
 
             const { data } = await clientAxios.post("/tasks", task, config)
 
-            // Agregar la tarea al state project
-            const updatedProject = { ...project }
-            updatedProject.tasks = [...project.tasks, data]
-            setProject(updatedProject)
-
             setAlert({})
             setModalFormTasks(false)
+
+            // SOCKET IO
+            socket.emit("new task", data)
         } catch (err) {
             console.log(err);
         }
@@ -424,6 +431,16 @@ const ProjectsProvider = ({ children }) => {
         setSearcher(!searcher)
     }
 
+    // Socket IO
+    const submitTaskProject = (task) => {
+        // Socket IO va a progragar la tarea a todos los usuarios que estén en el room
+
+        // Agregar la tarea al state project
+        const updatedProject = { ...project }
+        updatedProject.tasks = [...updatedProject.tasks, task]
+        setProject(updatedProject)
+    }
+
     return (
         <ProjectsContext.Provider
             value={{
@@ -451,7 +468,8 @@ const ProjectsProvider = ({ children }) => {
                 deletePartner,
                 completeTask,
                 searcher,
-                handleSearcher
+                handleSearcher,
+                submitTaskProject
             }}>
             {children}
         </ProjectsContext.Provider>
