@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext } from "react";
 import clientAxios from "../config/clientAxios";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import io from "socket.io-client";
 
 let socket;
@@ -22,6 +23,7 @@ const ProjectsProvider = ({ children }) => {
 
 
     const navigate = useNavigate();
+    const { auth } = useAuth()
 
     useEffect(() => {
         const getProjects = async () => {
@@ -44,7 +46,7 @@ const ProjectsProvider = ({ children }) => {
             }
         }
         getProjects();
-    }, [])
+    }, [auth])
 
     // Se va a encargar de abrir la conexion hacia socket io.
     // Se ejecuta UNA SOLA VEZ
