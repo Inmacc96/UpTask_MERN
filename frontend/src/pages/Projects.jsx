@@ -19,7 +19,11 @@ const Projects = () => {
         // Emite un evento hacia el socket identificado por un string
         // En este caso: Envia el evento test hacia el socket.
         // Como segundo argumento le pasamos los datos
-    }, [])
+
+        socket.on("response", (person) => {
+            console.log("desde el frontend", person);
+        })
+    })
 
     return (
         <>

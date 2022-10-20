@@ -58,7 +58,10 @@ io.on("connection", (socket) => {
   // Definir los evenetos de socket.io
   // on es para definir lo que va hacer cuando el evento ocurra
   socket.on("test", (data) => {
-    console.log("test desde Socket.io")
-    console.log(data)
-  })
+    console.log("test desde Socket.io", data);
+
+    //Enviar una respuesta de regreso
+    // emit envia un evento
+    socket.emit("response", { name: "Inma" });
+  });
 });
