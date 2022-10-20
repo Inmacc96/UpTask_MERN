@@ -53,7 +53,7 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("Connected to socket.io");
+  /* console.log("Connected to socket.io"); */
 
   // Definir los evenetos de socket.io
 
