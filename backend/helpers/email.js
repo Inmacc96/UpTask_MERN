@@ -15,11 +15,12 @@ export const emailConfirmAccount = async (data) => {
     },
   });
 
+
   // Información del email
 
   //Va a enviar el email una vez que identifica las credenciales de transport correctamente
   const info = await transport.sendMail({
-    from: '"UpTask - Project Manager" <accounts@uptask.com>',
+    from: `UpTask - Project Manager" <${process.env.EMAIL_USER}>`,
     to: email,
     subject: "UpTask - Confirm your account",
     text: "Confirm your UpTask account",
