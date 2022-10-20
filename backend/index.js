@@ -31,6 +31,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.get("/ping", function (req, res) {
+  res.json({ status: "OK" });
+});
+
 // Routing
 app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoutes);
