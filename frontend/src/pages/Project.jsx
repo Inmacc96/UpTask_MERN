@@ -16,7 +16,15 @@ const Project = () => {
 
     const { id } = params;
 
-    const { getProject, project, loading, handleModalTask, submitTaskProject } = useProjects();
+    const {
+        getProject,
+        project,
+        loading,
+        handleModalTask,
+        submitTaskProject,
+        deleteTaskProject,
+        editTaskProject } = useProjects();
+
     const admin = useAdmin();
 
     useEffect(() => {
@@ -37,10 +45,23 @@ const Project = () => {
                 submitTaskProject(newTask)
             }
         })
+
+        socket.on("deleted task", deletedTask => {
+            if (deletedTask.project === project._id) {
+                deleteTaskProject(deletedTask)
+            }
+        })
+
+        socket.on("updated task", updatedTask => {
+            if (updatedTask.project._id === project._id) {
+                editTaskProject(updatedTask)
+            }
+        })
     })
     // La diferencia de usar useEffect a no usarlo en este caso que no tiene array de dependencias
     // es que con useEffect te asegura de que eñ código se ejecuta JUSTO DESPUÉS del
     // renderizado del componente
+
 
 
     const { name } = project;

@@ -224,13 +224,11 @@ const ProjectsProvider = ({ children }) => {
 
             const { data } = await clientAxios.put(`/tasks/${task.id}`, task, config)
 
-            //Actualizar el estado project
-            const updatedProject = { ...project }
-            updatedProject.tasks = updatedProject.tasks.map(task => task._id === data._id ? data : task)
-            setProject(updatedProject)
-
             setAlert({})
             setModalFormTasks(false)
+
+            // Socket io
+            socket.emit("edit task", data)
         } catch (err) {
             console.log(err);
         }
@@ -288,12 +286,11 @@ const ProjectsProvider = ({ children }) => {
                 error: false
             })
 
-            // Eliminar la tarea del state project
-            const updatedProject = { ...project }
-            updatedProject.tasks = updatedProject.tasks.filter(taskState => taskState._id !== task._id)
-            setProject(updatedProject)
-
             setModalDeleteTask(false)
+
+            // Socket IO
+            socket.emit("delete task", task)
+
             setTask({})
 
             setTimeout(() => {
@@ -441,6 +438,20 @@ const ProjectsProvider = ({ children }) => {
         setProject(updatedProject)
     }
 
+    const deleteTaskProject = task => {
+        // Eliminar la tarea del state project
+        const updatedProject = { ...project }
+        updatedProject.tasks = updatedProject.tasks.filter(taskState => taskState._id !== task._id)
+        setProject(updatedProject)
+    }
+
+    const editTaskProject = task => {
+        //Actualizar el estado project
+        const updatedProject = { ...project }
+        updatedProject.tasks = updatedProject.tasks.map(taskState => taskState._id === task._id ? task : taskState)
+        setProject(updatedProject)
+    }
+
     return (
         <ProjectsContext.Provider
             value={{
@@ -469,7 +480,9 @@ const ProjectsProvider = ({ children }) => {
                 completeTask,
                 searcher,
                 handleSearcher,
-                submitTaskProject
+                submitTaskProject,
+                deleteTaskProject,
+                editTaskProject
             }}>
             {children}
         </ProjectsContext.Provider>

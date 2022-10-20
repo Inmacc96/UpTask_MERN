@@ -68,4 +68,14 @@ io.on("connection", (socket) => {
     // Solo a los usuarios que estén en project se les va a emitir el evento added task
     socket.to(project).emit("added task", task);
   });
+
+  socket.on("delete task", (task) => {
+    const project = task.project;
+    socket.to(project).emit("deleted task", task);
+  });
+
+  socket.on("edit task", (task) => {
+    const project = task.project._id;
+    socket.to(project).emit("updated task", task);
+  });
 });
