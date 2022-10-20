@@ -412,12 +412,11 @@ const ProjectsProvider = ({ children }) => {
 
             const { data } = await clientAxios.post(`/tasks/state/${id}`, {}, config)
 
-            const updatedProject = { ...project }
-            updatedProject.tasks = updatedProject.tasks.map(task =>
-                task._id == data._id ? data : task)
-            setProject(updatedProject)
             setTask({})
             setAlert({})
+
+            // Socket IO
+            socket.emit("change task state", data)
 
         } catch (err) {
             console.log(err.response)
@@ -452,6 +451,13 @@ const ProjectsProvider = ({ children }) => {
         setProject(updatedProject)
     }
 
+    const updateStateTaskProject = task => {
+        const updatedProject = { ...project }
+        updatedProject.tasks = updatedProject.tasks.map(taskState =>
+            taskState._id == task._id ? task : taskState)
+        setProject(updatedProject)
+    }
+
     return (
         <ProjectsContext.Provider
             value={{
@@ -482,7 +488,8 @@ const ProjectsProvider = ({ children }) => {
                 handleSearcher,
                 submitTaskProject,
                 deleteTaskProject,
-                editTaskProject
+                editTaskProject,
+                updateStateTaskProject
             }}>
             {children}
         </ProjectsContext.Provider>

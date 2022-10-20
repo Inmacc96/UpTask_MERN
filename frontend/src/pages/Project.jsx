@@ -23,7 +23,8 @@ const Project = () => {
         handleModalTask,
         submitTaskProject,
         deleteTaskProject,
-        editTaskProject } = useProjects();
+        editTaskProject,
+        updateStateTaskProject } = useProjects();
 
     const admin = useAdmin();
 
@@ -55,6 +56,12 @@ const Project = () => {
         socket.on("updated task", updatedTask => {
             if (updatedTask.project._id === project._id) {
                 editTaskProject(updatedTask)
+            }
+        })
+
+        socket.on("updated task state", updatedStateTask => {
+            if (updatedStateTask.project._id === project._id) {
+                updateStateTaskProject(updatedStateTask)
             }
         })
     })
