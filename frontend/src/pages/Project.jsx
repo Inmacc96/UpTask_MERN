@@ -7,7 +7,9 @@ import ModalDeleteTask from "../components/ModalDeleteTask";
 import ModalDeletePartner from "../components/ModalDeletePartner";
 import Task from "../components/Task";
 import Partner from "../components/Partner";
-import Alert from "../components/Alert";
+import io from "socket.io-client";
+
+let socket;
 
 const Project = () => {
     const params = useParams();
@@ -20,6 +22,24 @@ const Project = () => {
     useEffect(() => {
         getProject(id)
     }, [])
+
+    //Este useEffect se ejecuta una sola vez, para abrir el proyecto, entrar en esa habitación
+    useEffect(() => {
+        socket = io(import.meta.env.VITE_BACKEND_URL)
+        socket.emit("open project", id)
+    }, [])
+
+    //Este useEffect se va a estar ejecutando todo el tiempo, es decir,
+    //cada vez que se renderice el componente
+    useEffect(() => {
+        socket.on("response", (person) => {
+            console.log(person)
+        })
+    })
+    // La diferencia de usar useEffect a no usarlo en este caso que no tiene array de dependencias
+    // es que con useEffect te asegura de que eñ código se ejecuta JUSTO DESPUÉS del
+    // renderizado del componente
+
 
     const { name } = project;
 

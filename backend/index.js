@@ -39,7 +39,7 @@ app.use("/api/tasks", taskRoutes);
 const PORT = process.env.PORT || 4000;
 
 const server = app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
 
 // Stocket.io
@@ -53,15 +53,12 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("Conectado a socket.io");
+  console.log("Connected to socket.io");
 
   // Definir los evenetos de socket.io
-  // on es para definir lo que va hacer cuando el evento ocurra
-  socket.on("test", (data) => {
-    console.log("test desde Socket.io", data);
 
-    //Enviar una respuesta de regreso
-    // emit envia un evento
-    socket.emit("response", { name: "Inma" });
+  socket.on("open project", (project) => {
+    socket.join(project);
+    // A los usuarios que estén dentro de este proyecto, se les va a resfrecar la pantalla automaticamente
   });
 });
