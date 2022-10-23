@@ -60,13 +60,19 @@ EMAIL_HOST = XXXX
 EMAIL_PORT = XXXX
 ```
 
-and the _.env_ file in the frontend folder with the following:
+where 
+
+- `MONGO_URI` is the URI of your MongoDB database,
+- `JWT_SECRET` is the key to generate and decrypt your JWT,
+- the `EMAIL` variables are the credentials from where you send the mails.
+
+In addition, you should add the _.env_ file in the frontend folder with the following:
 
 ```
 VITE_BACKEND_URL = http://localhost:4000
 ```
 
-If in doubt, consult the administrator.
+If in doubt, please consult the administrator.
 
 ## :hammer: Built with
 
@@ -75,20 +81,20 @@ If in doubt, consult the administrator.
 - [react JS](https://reactjs.org/): Web library used.
 - [react-router-dom](https://reactrouter.com/): To build the routing system.
 - [axios](https://axios-http.com/): To make HTTP requests to the server.
-- [headlessui]
-- [socket.io-client]
-- [tailwindcss]
+- [tailwindcss](https://tailwindcss.com/): CSS framework used.
+- [headlessui](https://headlessui.com/): Used to add modals in the app.
+- [socket.io-client](https://socket.io/docs/v4/client-api/): For the application to work in real time. If there is any change in the database, it is displayed in the application at the same time.
 
 ### :gear: Backend
 
 - [express](https://expressjs.com/): Node.js framework used.
+- [mongoose](https://mongoosejs.com/): Used to perform the queries to the MongoDB database.
 - [cors](https://www.npmjs.com/package/cors): To allow our client to access the server's resources.
 - [dotenv](https://www.npmjs.com/package/dotenv): To access environment variables.
 - [bcrypt](https://www.npmjs.com/package/bcrypt): Used to encrypt the user's password and to check that the password entered matches the original one.
-- [jsonwebtoken]:
-- [mongoose]:
-- [nodemailer]:
-- [socket.io]:
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken): Used for user authentication.
+- [nodemailer](https://nodemailer.com/about/): To send e-mails to the user to confirm the account created or to recover the password.
+- [socket.io](https://socket.io/): For the application to work in real time. If there is any change in the database, it is displayed in the application at the same time.
 
 ### :package: Deployment
 
