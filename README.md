@@ -18,13 +18,46 @@ Fullstack application using the MERN stack. This project belongs to the [React -
 
 The application consists of two parts:
 
-- User authentication. In this part you will find the login, sign up, confirm account, forget password and generate new password pages.
+- *User authentication*. In this part you will find the login, sign up, confirm account, forget password and generate new password pages.
 
 ![LoginApp](./appImages/login.png)
 
-- La aplicación principal donde podrás gestionar tus proyectos, crear nuevos proyectos, hacer una busqueda de éstos etc.
+- *Main application*. The aim of this project is to manage your projects. 
 
-AÑADIR CAPTURAS DE LA APP
+You can create a new project using the following form:
+
+![Create Project](./appImages/newProject.png)
+
+And all of them will appear on the homepage.
+
+![Main Page](./appImages/mainpage.png)
+
+Within each project will appear the related tasks and the collaborators belonging to the project.
+
+![Project](./appImages/project.png)
+
+From the previous page you can edit and delete the project by clicking on edit,
+
+![Edit Project](./appImages/editProject.png)
+
+create new task,
+
+![Create Task](./appImages/newTask.png)
+
+Within each task, you can edit it, delete it or indicate whether it is completed and it will automatically appear by whom,
+
+![Task](./appImages/task.png)
+
+and you can also add partners to the project.
+
+![add Partner](./appImages/addPartner.png)
+
+**Note**
+All these functionalities can only be realised by the creator of the project!. Collaborators will only be able to look at the tasks contained in the project and indicate whether the task has been completed or not.
+
+In addition, the application contains a project search engine:
+
+![search Projects](./appImages/searchProjects.png)
 
 ## :wrench: Usage
 
@@ -78,7 +111,7 @@ If in doubt, please consult the administrator.
 
 ### :computer: Frontend
 
-- [react JS](https://reactjs.org/): Web library used.
+- [react JS](https://reactjs.org/): JavaScript library used.
 - [react-router-dom](https://reactrouter.com/): To build the routing system.
 - [axios](https://axios-http.com/): To make HTTP requests to the server.
 - [tailwindcss](https://tailwindcss.com/): CSS framework used.
