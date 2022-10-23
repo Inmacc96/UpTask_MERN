@@ -18,44 +18,45 @@ Fullstack application using the MERN stack. This project belongs to the [React -
 
 The application consists of two parts:
 
-- *User authentication*. In this part you will find the login, sign up, confirm account, forget password and generate new password pages.
+- _User authentication_. In this part you will find the login, sign up, confirm account, forget password and generate new password pages.
 
 ![LoginApp](./appImages/login.png)
 
-- *Main application*. The aim of this project is to manage your projects. 
+- _Main application_. The aim of this project is to **manage your projects**.
 
-You can create a new project using the following form:
+You can **create** a new **project** using the following form:
 
 ![Create Project](./appImages/newProject.png)
 
-And all of them will appear on the homepage.
+And all of them will appear on the **homepage**.
 
 ![Main Page](./appImages/mainpage.png)
 
-Within each project will appear the related tasks and the collaborators belonging to the project.
+Within each project will appear the **related tasks** and the **collaborators** belonging to the project.
 
 ![Project](./appImages/project.png)
 
-From the previous page you can edit and delete the project by clicking on edit,
+From the previous page you can **edit** and **delete** the **project** by clicking on _edit_,
 
 ![Edit Project](./appImages/editProject.png)
 
-create new task,
+**create** new **task**,
 
 ![Create Task](./appImages/newTask.png)
 
-Within each task, you can edit it, delete it or indicate whether it is completed and it will automatically appear by whom,
+Within each task, you can **edit** it, **delete** it or **indicate** whether it is **completed** and it will automatically appear by whom,
 
 ![Task](./appImages/task.png)
 
-and you can also add partners to the project.
+and you can also **add partners** to the project.
 
 ![add Partner](./appImages/addPartner.png)
 
-**Note**
-All these functionalities can only be realised by the creator of the project!. Collaborators will only be able to look at the tasks contained in the project and indicate whether the task has been completed or not.
+> **Note**
+> All these functionalities can only be realised by the creator of the project!. Collaborators will only be able to look at the tasks
+> contained in the project and indicate whether the task has been completed or not.
 
-In addition, the application contains a project search engine:
+In addition, the application contains a **project search engine**:
 
 ![search Projects](./appImages/searchProjects.png)
 
