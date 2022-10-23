@@ -18,9 +18,9 @@ Fullstack application using the MERN stack. This project belongs to the [React -
 
 The application consists of two parts:
 
-- La autenticación del usuario, donde encontrarás las páginas de login, sign up y forget password
+- User authentication. In this part you will find the login, sign up, confirm account, forget password and generate new password pages.
 
-AÑADIR CAPTURAS DE LA APP
+![LoginApp](./appImages/login.png)
 
 - La aplicación principal donde podrás gestionar tus proyectos, crear nuevos proyectos, hacer una busqueda de éstos etc.
 
@@ -60,7 +60,7 @@ EMAIL_HOST = XXXX
 EMAIL_PORT = XXXX
 ```
 
-where 
+where
 
 - `MONGO_URI` is the URI of your MongoDB database,
 - `JWT_SECRET` is the key to generate and decrypt your JWT,
