@@ -22,7 +22,7 @@ The application consists of two parts:
 
 ![LoginApp](./appImages/login.png)
 
-- _Main application_. The aim of this project is to **manage your projects**.
+- _Main application_. The aim of this project is to **manage your projects and tasks**.
 
 You can **create** a new **project** using the following form:
 
