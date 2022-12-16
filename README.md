@@ -133,7 +133,7 @@ If in doubt, please consult the administrator.
 ### :package: Deployment
 
 - Frontend: [Netlify](https://www.netlify.com/)
-- Backend: [Heroku](https://www.heroku.com)
+- Backend: [Render](https://render.com/)
 
 ## :link: Links
 
