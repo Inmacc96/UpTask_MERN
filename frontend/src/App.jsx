@@ -19,6 +19,7 @@ import { AuthProvider } from "./context/AuthProvider"
 import { ProjectsProvider } from "./context/ProjectsProvider";
 
 function App() {
+  console.log({"BACKEND": import.meta.env.VITE_BACKEND_URL})
   return (
     <BrowserRouter>
       <AuthProvider>
